@@ -160,7 +160,7 @@ export const getAllTransactions = async (req, res) => {
 };
 
 
-exports.deleteTransaction = async (req, res) => {
+export const deleteTransaction = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -189,3 +189,11 @@ exports.deleteTransaction = async (req, res) => {
     });
   }
 };
+
+export default {
+    addBalance,
+    addExpense,
+    getAllTransactions,
+    deleteTransaction,
+    getTransactionHistory
+}

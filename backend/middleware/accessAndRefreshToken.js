@@ -5,6 +5,7 @@ export const generateAccessToken = (user) => {
     {
       id: user._id,
       role: user.role,
+      email:user.email
     },
     process.env.ACCESS_TOKEN_SECRET,
     {
@@ -17,6 +18,8 @@ export const generateRefreshToken = (user) => {
   return jwt.sign(
     {
       id: user._id,
+       role: user.role,
+      email:user.email
     },
     process.env.REFRESH_TOKEN_SECRET,
     {
