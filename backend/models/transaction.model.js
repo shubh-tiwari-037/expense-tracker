@@ -28,7 +28,7 @@ const transactionSchema = new mongoose.Schema(
     type: {
       type: String,
       enum: ["income", "expense"],
-      required: true,
+     
     },
 
     category: {
@@ -41,7 +41,7 @@ const transactionSchema = new mongoose.Schema(
         "Travel",
         "Other",
       ],
-      required: true,
+    
     },
 
     transactionDate: {

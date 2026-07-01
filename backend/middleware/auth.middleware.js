@@ -1,9 +1,9 @@
-const jwt = require("jsonwebtoken");
-const User = require("../models/user.model");
+import User from "../models/user.model.js"
+import jwt from "jsonwebtoken";
 
 export const auth = async (req, res, next) => {
   try {
-    const token = req.cookies.accessToken;
+    const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "");
 
     if (!token) {
       return res.status(401).json({
@@ -27,6 +27,7 @@ export const auth = async (req, res, next) => {
 
     next();
   } catch (error) {
+     console.log(error);
     return res.status(401).json({
       success: false,
       message: "Invalid or Expired Token",

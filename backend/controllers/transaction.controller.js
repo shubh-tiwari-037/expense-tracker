@@ -84,7 +84,7 @@ export const addExpense = async (req, res) => {
     const transaction = await Transaction.create({
       user: req.user.id,
       wallet: wallet._id,
-      title: title || "Expense",
+      title: title || "expense",
       amount,
       type: "expense",
       category: category || "Other",
@@ -113,10 +113,11 @@ export const addExpense = async (req, res) => {
 export const getTransactionHistory = async (req, res) => {
   try {
 
-    const transactions = await Transaction.find({
-      user: req.user.id,
-    })
-      .sort({ createdAt: -1 });
+   const transactions = await Transaction.find({
+  user: req.user.id,
+})
+.populate("user", "fullName email")
+.sort({ createdAt: -1 });
 
     return res.status(200).json({
       success: true,
@@ -136,6 +137,7 @@ export const getTransactionHistory = async (req, res) => {
 
 
 export const getAllTransactions = async (req, res) => {
+    console.log("getAllTransactions Hit");
   try {
 
     const transactions = await Transaction.find()
@@ -166,7 +168,7 @@ export const deleteTransaction = async (req, res) => {
 
     const transaction = await Transaction.findOne({
       _id: id,
-      userId: req.user.id,
+      user: req.user.id,
     });
 
     if (!transaction) {

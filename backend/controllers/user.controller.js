@@ -30,7 +30,7 @@ export const register = async (req, res) => {
       fullName,
       email,
       password: hashedPassword,
-      role,
+     
     });
 
     await Wallet.create({
@@ -58,9 +58,10 @@ export const register = async (req, res) => {
 
 
 export const login = async (req, res) => {
+      console.log("Login API Hit");
   try {
     const { email, password } = req.body;
-
+console.log(req.body);
     if (!email || !password) {
       return res.status(400).json({
         success: false,
@@ -94,8 +95,8 @@ export const login = async (req, res) => {
 
     const cookieOptions = {
       httpOnly: true,
-      secure: true,
-      sameSite: "strict",
+      secure: false,
+      sameSite: "lax",
     };
 
 
