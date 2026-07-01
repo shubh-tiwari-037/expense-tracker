@@ -95,7 +95,7 @@ console.log(req.body);
 
     const cookieOptions = {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: "lax",
     };
 

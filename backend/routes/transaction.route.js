@@ -15,8 +15,9 @@ import { auth, } from "../middleware/auth.middleware.js";
 const transactionRoute = express.Router();
 
 transactionRoute.post("/balance",auth,addBalance)
-transactionRoute.post("/expence",auth,addExpense)
-transactionRoute.get("/get",getAllTransactions)
+transactionRoute.post("/expense",auth,addExpense)
+transactionRoute.get("/get",auth,getAllTransactions)
+
 transactionRoute.get("/:id",auth,getTransactionHistory)
 
 transactionRoute.delete("/:id",auth,deleteTransaction)
