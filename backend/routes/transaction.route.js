@@ -1,26 +1,28 @@
 import express from "express";
 import {
+  createTransaction,
   addBalance,
   addExpense,
-  getAllTransactions,
-  getTransactionHistory,
+  getMyTransactions,
+  getTransactionById,
+  exportTransactionsCsv,
   deleteTransaction,
 } from "../controllers/transaction.controller.js";
 
-import { auth, } from "../middleware/auth.middleware.js";
-// import { isAdmin } from "../middleware/isAdmin.js";
-
-
+import { auth } from "../middleware/auth.middleware.js";
+import { validateTransaction, validateAmount } from "../validators/transaction.validator.js";
 
 const transactionRoute = express.Router();
 
-transactionRoute.post("/balance",auth,addBalance)
-transactionRoute.post("/expense",auth,addExpense)
-transactionRoute.get("/get",auth,getAllTransactions)
+// Spec-aligned CRUD
+transactionRoute.post("/", auth, validateTransaction, createTransaction);
+transactionRoute.get("/", auth, getMyTransactions);
+transactionRoute.get("/export/csv", auth, exportTransactionsCsv);
+transactionRoute.get("/:id", auth, getTransactionById);
+transactionRoute.delete("/:id", auth, deleteTransaction);
 
-transactionRoute.get("/:id",auth,getTransactionHistory)
+// Quick-add shortcuts used by the dashboard's Quick Add Income / Quick Add Expense
+transactionRoute.post("/balance", auth, validateAmount, addBalance);
+transactionRoute.post("/expense", auth, validateAmount, addExpense);
 
-transactionRoute.delete("/:id",auth,deleteTransaction)
-
-
-export default transactionRoute
+export default transactionRoute;

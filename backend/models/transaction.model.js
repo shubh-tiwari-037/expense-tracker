@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { ALL_CATEGORIES } from "../constants/categories.js";
 
 const transactionSchema = new mongoose.Schema(
   {
@@ -28,20 +29,18 @@ const transactionSchema = new mongoose.Schema(
     type: {
       type: String,
       enum: ["income", "expense"],
-     
+      required: [true, "Type is required"],
     },
 
     category: {
       type: String,
-      enum: [
-        "Salary",
-        "Food",
-        "Rent",
-        "Shopping",
-        "Travel",
-        "Other",
-      ],
-    
+      enum: ALL_CATEGORIES,
+      default: "Other",
+    },
+
+    description: {
+      type: String,
+      default: "",
     },
 
     transactionDate: {
