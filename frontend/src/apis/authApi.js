@@ -10,6 +10,15 @@ export const loginApi = async (data) => {
   return res.data;
 };
 
+// Google Login / Signup
+export const googleAuthApi = async (token) => {
+  const res = await axiosClient.post("/auth/google", {
+    token,
+  });
+
+  return res.data;
+};
+
 export const logoutApi = async () => {
   const res = await axiosClient.post("/auth/logout");
   return res.data;

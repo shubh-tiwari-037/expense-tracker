@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState, useCallback } from "react";
-import { getMeApi, loginApi, logoutApi, registerApi } from "../apis/authApi";
+import { getMeApi, loginApi, logoutApi, registerApi,  googleAuthApi, } from "../apis/authApi";
 
 export const AuthContext = createContext(null);
 
@@ -28,6 +28,16 @@ export default function AuthProvider({ children }) {
     return res;
   };
 
+  const googleAuth = async (token) => {
+  const res = await googleAuthApi(token);
+
+  // Backend has already set the cookies.
+  // Fetch the logged-in user.
+  await loadUser();
+
+  return res;
+};
+
   const register = async (data) => {
     return registerApi(data);
   };
@@ -48,6 +58,7 @@ export default function AuthProvider({ children }) {
     login,
     register,
     logout,
+     googleAuth,
     refreshUser: loadUser,
   };
 

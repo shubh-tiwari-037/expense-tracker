@@ -2,16 +2,29 @@ import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
+import { GoogleLogin } from "@react-oauth/google";
 
 export default function Signup() {
   const navigate = useNavigate();
-  const { register: registerUser } = useAuth();
+  const { register: registerUser, googleAuth } = useAuth();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm();
+
+    const handleGoogleSignup = async (credentialResponse) => {
+    try {
+      await googleAuth(credentialResponse.credential);
+
+      toast.success("Google Signup Successful");
+
+      navigate("/");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Google Signup Failed");
+    }
+  };
 
   const onSubmit = async (form) => {
     try {
@@ -45,7 +58,9 @@ export default function Signup() {
               })}
             />
             {errors.fullName && (
-              <p className="text-red-500 text-sm mt-1">{errors.fullName.message}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.fullName.message}
+              </p>
             )}
           </div>
 
@@ -57,7 +72,9 @@ export default function Signup() {
               {...register("email", { required: "Email is required" })}
             />
             {errors.email && (
-              <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.email.message}
+              </p>
             )}
           </div>
 
@@ -72,7 +89,9 @@ export default function Signup() {
               })}
             />
             {errors.password && (
-              <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.password.message}
+              </p>
             )}
           </div>
 
@@ -83,6 +102,18 @@ export default function Signup() {
           >
             {isSubmitting ? "Creating account..." : "Signup"}
           </button>
+          <div className="flex items-center my-4">
+            <div className="flex-1 border-t border-gray-300"></div>
+            <span className="px-3 text-gray-500 text-sm">OR</span>
+            <div className="flex-1 border-t border-gray-300"></div>
+          </div>
+
+          <div className="flex justify-center">
+            <GoogleLogin
+              onSuccess={handleGoogleSignup}
+              onError={() => toast.error("Google Signup Failed")}
+            />
+          </div>
         </form>
 
         <p className="text-center mt-4 text-sm">

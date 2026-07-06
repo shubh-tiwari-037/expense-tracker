@@ -1,17 +1,30 @@
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import { GoogleLogin } from "@react-oauth/google";
 import useAuth from "../hooks/useAuth";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { login } = useAuth();
+const { login, googleAuth } = useAuth();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm();
+
+     const handleGoogleLogin = async (credentialResponse) => {
+    try {
+      await googleAuth(credentialResponse.credential);
+
+      toast.success("Google Signup Successful");
+
+      navigate("/");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Google Signup Failed");
+    }
+  };
 
   const onSubmit = async (form) => {
     try {
@@ -64,6 +77,25 @@ export default function Login() {
           >
             {isSubmitting ? "Logging in..." : "Login"}
           </button>
+
+          <div className="relative my-2">
+  <div className="absolute inset-0 flex items-center">
+    <div className="w-full border-t border-gray-300"></div>
+  </div>
+
+  <div className="relative flex justify-center text-sm">
+    <span className="bg-white dark:bg-gray-900 px-2 text-gray-500">
+      OR
+    </span>
+  </div>
+</div>
+
+<div className="flex justify-center">
+  <GoogleLogin
+    onSuccess={handleGoogleLogin}
+    onError={() => toast.error("Google Login Failed")}
+  />
+</div>
         </form>
 
         <p className="text-center mt-4 text-sm">
