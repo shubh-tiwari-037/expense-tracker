@@ -10,11 +10,15 @@ import {
 } from "../controllers/user.controller.js";
 import { auth } from "../middleware/auth.middleware.js";
 import { validateRegister, validateLogin } from "../validators/auth.validator.js";
+import { googleLogin } from "../controllers/googleAuth.controller.js";
+
 
 const userRoute = express.Router();
 
 userRoute.post("/register", validateRegister, register);
 userRoute.post("/login", validateLogin, login);
+userRoute.post("/google", googleLogin);
+
 userRoute.post("/logout", auth, logout);
 userRoute.get("/me", auth, getMe);
 userRoute.patch("/profile", auth, updateProfile);

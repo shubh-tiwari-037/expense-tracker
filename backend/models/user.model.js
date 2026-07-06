@@ -3,13 +3,15 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    fullName: {
-      type: String,
-      required: [true, "Full name is required"],
-      minlength: 3,
-      maxlength: 50,
-    },
-
+   fullName: {
+  type: String,
+  required: function () {
+    return this.provider === "local";
+  },
+  minlength: 3,
+  maxlength: 50,
+ 
+},
     email: {
       type: String,
       required: [true, "Email is required"],
@@ -17,11 +19,22 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
     },
 
-    password: {
+   password: {
+  type: String,
+  required: function () {
+    return this.provider === "local";
+  },
+},
+ provider: {
       type: String,
-      required: [true, "Password is required"],
+      enum: ["local", "google"],
+      default: "local",
     },
 
+    googleId: {
+      type: String,
+    },
+    
     role: {
       type: String,
       enum: ["User", "Admin"],
