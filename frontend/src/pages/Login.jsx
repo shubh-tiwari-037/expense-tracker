@@ -34,7 +34,7 @@ const { login, googleAuth } = useAuth();
       });
 
       toast.success(res.message || "Login Successful");
-      navigate("/");
+      navigate("/pricing");
     } catch (err) {
       toast.error(err.response?.data?.message || "Login Failed");
     }

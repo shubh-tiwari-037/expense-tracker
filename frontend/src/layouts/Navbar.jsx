@@ -47,6 +47,9 @@ export default function Navbar() {
             <Link className="hover:text-gray-300" to="/">
               Dashboard
             </Link>
+             <Link className="hover:text-gray-300" to="pricing">
+             Pricing
+            </Link>
             <Link className="hover:text-gray-300" to="/history">
               History
             </Link>

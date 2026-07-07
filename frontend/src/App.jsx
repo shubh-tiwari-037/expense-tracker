@@ -16,6 +16,7 @@ import AdminUsers from "./pages/admin/AdminUsers";
 import AdminTransactions from "./pages/admin/AdminTransactions";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import Profile from "./pages/Profile";
+import Pricing from "./pages/pricing";
 
 export default function App() {
   return (
@@ -28,7 +29,8 @@ export default function App() {
             <Route element={<MainLayout />}>
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-
+              <Route path="/pricing" element={<Pricing />} />
+              
               <Route element={<ProtectedRoute />}>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/add-balance" element={<AddBalance />} />
@@ -40,7 +42,10 @@ export default function App() {
               <Route element={<AdminRoute />}>
                 <Route path="/admin" element={<AdminDashboard />} />
                 <Route path="/admin/users" element={<AdminUsers />} />
-                <Route path="/admin/transactions" element={<AdminTransactions />} />
+                <Route
+                  path="/admin/transactions"
+                  element={<AdminTransactions />}
+                />
               </Route>
             </Route>
           </Routes>

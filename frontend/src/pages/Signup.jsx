@@ -35,7 +35,7 @@ export default function Signup() {
       });
 
       toast.success(res.message || "Signup Successful");
-      navigate("/login");
+      navigate("/pricing");
     } catch (err) {
       toast.error(err.response?.data?.message || "Signup Failed");
     }
