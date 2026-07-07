@@ -4,11 +4,13 @@ import cors from "cors";
 
 import cookieParser from "cookie-parser";
 
+import paymentRoute from "./routes/payment.route.js";
 import userRoute from "./routes/user.route.js";
 import transactionRoute from "./routes/transaction.route.js";
 import walletRoute from "./routes/wallet.route.js";
 import adminRoute from "./routes/admin.route.js";
 import { errorHandler, notFound } from "./middleware/errorHandler.js";
+
 const app = express();
 
 
@@ -37,6 +39,7 @@ app.use("/api/auth", userRoute);
 app.use("/api/transaction", transactionRoute);
 app.use("/api/wallet", walletRoute);
 app.use("/api/admin", adminRoute);
+app.use("/api/payment", paymentRoute);
 // app.use(morgan("dev"));
 
 app.use(notFound);

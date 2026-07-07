@@ -41,6 +41,12 @@ const userSchema = new mongoose.Schema(
       default: "User",
     },
 
+    subscription: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Subscription",
+    default: null,
+},
+
     refreshToken: {
   type: String,
 

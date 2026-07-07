@@ -6,9 +6,9 @@ import { generateAccessToken, generateRefreshToken } from "../middleware/accessA
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 
-const cookieOptions = {
+export const cookieOptions = {
   httpOnly: true,
-  secure: true,
+  secure: process.env.NODE_ENV === "production",
   sameSite: "lax",
 };
 
